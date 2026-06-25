@@ -4,6 +4,8 @@ import SpriteKit
 struct GameView: View {
     @StateObject private var vm = GameViewModel()
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var showHowTo = false
+    @AppStorage("chainfall.seenHowTo") private var seenHowTo = false
 
     var body: some View {
         ZStack {
@@ -21,12 +23,20 @@ struct GameView: View {
 
             if vm.isOver { gameOver }
         }
-        .onAppear { vm.setReduceMotion(reduceMotion) }
+        .onAppear {
+            vm.setReduceMotion(reduceMotion)
+            if !seenHowTo { showHowTo = true; seenHowTo = true }   // rules on first launch
+        }
         .onChange(of: reduceMotion) { _, v in vm.setReduceMotion(v) }
+        .sheet(isPresented: $showHowTo) { HowToPlayView() }
     }
 
     private var topBar: some View {
         HStack(alignment: .top) {
+            Button { showHowTo = true } label: {
+                Image(systemName: "questionmark.circle").font(.system(size: 22)).foregroundStyle(Palette.onInkSecondary)
+            }
+            .accessibilityLabel("How to play")
             VStack(alignment: .leading, spacing: 2) {
                 Text("banked").font(Type.instrumentMicro).foregroundStyle(Palette.onInkSecondary)
                 Text("\(vm.banked)").font(Type.instrumentStd).monospacedDigit().foregroundStyle(Palette.onInkPrimary)
