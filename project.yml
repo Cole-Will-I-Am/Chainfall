@@ -1,0 +1,57 @@
+name: Chainfall
+options:
+  bundleIdPrefix: com.colecantcode
+  deploymentTarget:
+    iOS: "17.0"
+  xcodeVersion: "16.0"
+  createIntermediateGroups: true
+
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    GENERATE_INFOPLIST_FILE: true
+    # Bump MARKETING_VERSION on EVERY TestFlight build.
+    MARKETING_VERSION: "1.0.0"
+    CURRENT_PROJECT_VERSION: 1
+    CODE_SIGN_STYLE: Automatic
+    DEVELOPMENT_TEAM: B3DB33R8JN
+
+targets:
+  Chainfall:
+    type: application
+    platform: iOS
+    sources:
+      - Chainfall/Sources
+      - Chainfall/Assets.xcassets
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.colecantcode.chainfall
+        INFOPLIST_KEY_CFBundleDisplayName: CHAINFALL
+        INFOPLIST_KEY_CFBundleName: Chainfall
+        INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: false
+        INFOPLIST_KEY_UIApplicationSceneManifest_Generation: true
+        INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents: true
+        INFOPLIST_KEY_UILaunchScreen_Generation: true
+        INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone: "UIInterfaceOrientationPortrait"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        PRODUCT_NAME: Chainfall
+        TARGETED_DEVICE_FAMILY: "1"
+        PRODUCT_MODULE_NAME: Chainfall
+        CODE_SIGN_IDENTITY: "Apple Development"
+    scheme:
+      testTargets:
+        - ChainfallTests
+
+  ChainfallTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - Chainfall/Tests
+    dependencies:
+      - target: Chainfall
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.colecantcode.chainfall.tests
+        GENERATE_INFOPLIST_FILE: true
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/Chainfall.app/Chainfall"
