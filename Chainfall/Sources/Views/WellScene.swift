@@ -37,7 +37,8 @@ final class WellScene: SKScene {
         for i in 0..<(stops.count - 1) where v >= stops[i].0 && v <= stops[i + 1].0 {
             let (a, ca) = stops[i], (b, cb) = stops[i + 1]
             let t = CGFloat(v - a) / CGFloat(b - a)
-            var ra: CGFloat = 0, ga = 0, ba = 0, aa = 0, rb: CGFloat = 0, gb = 0, bb = 0, ab = 0
+            var ra: CGFloat = 0, ga: CGFloat = 0, ba: CGFloat = 0, aa: CGFloat = 0
+            var rb: CGFloat = 0, gb: CGFloat = 0, bb: CGFloat = 0, ab: CGFloat = 0
             ca.getRed(&ra, green: &ga, blue: &ba, alpha: &aa); cb.getRed(&rb, green: &gb, blue: &bb, alpha: &ab)
             return UIColor(red: ra + (rb - ra) * t, green: ga + (gb - ga) * t, blue: ba + (bb - ba) * t, alpha: 1)
         }
@@ -68,7 +69,7 @@ final class WellScene: SKScene {
             label.text = "\(v)"
             label.fontColor = UIColor(Palette.ink)
         case .gray:
-            shape.fillColor = UIColor(Palette.ink3)
+            shape.fillColor = UIColor(white: 0.42, alpha: 1)
             label.text = ""
         }
     }

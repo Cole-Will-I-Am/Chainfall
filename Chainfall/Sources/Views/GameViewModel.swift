@@ -17,7 +17,7 @@ final class GameViewModel: ObservableObject {
     private var game: ChainfallGame
 
     init() {
-        let seed = UInt64.random(in: 1 ... .max)
+        let seed = UInt64.random(in: 1 ... UInt64.max)
         game = ChainfallGame(seed: seed, config: config)
         scene = WellScene(size: CGSize(width: 700, height: 900), config: config)
         scene.onColumnTap = { [weak self] col in self?.drop(column: col) }
@@ -49,7 +49,7 @@ final class GameViewModel: ObservableObject {
     }
 
     func restart() {
-        let seed = UInt64.random(in: 1 ... .max)
+        let seed = UInt64.random(in: 1 ... UInt64.max)
         game = ChainfallGame(seed: seed, config: config)
         scene.setBoard(game.columns)
         busy = false
